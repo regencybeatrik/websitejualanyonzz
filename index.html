@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>YONZ STORE</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@600;700&display=swap');
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#080808;color:#f3f3f3;font-family:DM Sans,Arial,sans-serif}
+body:before{content:"";position:fixed;inset:0;z-index:-2;background:radial-gradient(circle at 80% 5%,#292929 0,transparent 30%),radial-gradient(circle at 10% 80%,#181818 0,transparent 28%),#080808}
+body:after{content:"";position:fixed;inset:0;z-index:-1;opacity:.12;background-image:linear-gradient(#fff 1px,transparent 1px),linear-gradient(90deg,#fff 1px,transparent 1px);background-size:60px 60px;mask-image:linear-gradient(to bottom,black,transparent 75%)}
+.nav{position:sticky;top:0;z-index:20;height:70px;padding:0 7%;display:flex;align-items:center;justify-content:space-between;background:#080808dd;backdrop-filter:blur(18px);border-bottom:1px solid #292929}
+.logo{font-weight:700;letter-spacing:3px}.logo span{font-weight:400;color:#777}
+.nav a{color:#aaa;text-decoration:none;margin-left:22px;font-size:13px}
+.hero{min-height:88vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:70px 20px}
+.hero>div{max-width:800px}.eyebrow,.tag{font-size:11px;letter-spacing:4px;color:#888}
+h1,h2,h3{font-family:"Playfair Display",serif}.hero h1{font-size:clamp(58px,11vw,130px);line-height:.9;margin:22px 0;background:linear-gradient(120deg,#fff,#777);-webkit-background-clip:text;color:transparent}
+.hero p{color:#999;line-height:1.8;max-width:580px;margin:0 auto 30px}
+.btn{display:inline-block;border:1px solid #666;background:#eee;color:#111;padding:13px 23px;border-radius:999px;text-decoration:none;font-weight:700;cursor:pointer}
+.section{max-width:1050px;margin:auto;padding:90px 22px}.head{display:flex;gap:16px;align-items:baseline;border-bottom:1px solid #292929;margin-bottom:28px}.head span{color:#666;font-size:12px}.head h2{font-size:34px}
+.card{background:linear-gradient(145deg,#171717,#0c0c0c);border:1px solid #292929;border-radius:24px;padding:30px;box-shadow:0 25px 80px #0008}
+.product{display:flex;justify-content:space-between;align-items:end;gap:25px}.product h3{font-size:35px;margin:12px 0}.product p{color:#999;line-height:1.7}.price{font-size:26px;font-weight:700;margin:20px 0}
+input,select{width:100%;padding:14px;border:1px solid #333;border-radius:12px;background:#090909;color:#eee;margin:8px 0 14px;outline:none}
+.row{display:flex;gap:10px}.row>*{flex:1}.status{padding:18px;border:1px solid #333;border-radius:14px;margin-top:18px;color:#aaa}
+footer{text-align:center;color:#666;padding:55px 20px;border-top:1px solid #222}
+#gate{position:fixed;inset:0;z-index:999;background:#070707;display:flex;align-items:center;justify-content:center;padding:25px;text-align:center}
+.gatebox{max-width:460px;border:1px solid #333;background:#111;border-radius:24px;padding:35px}.dot{width:10px;height:10px;border-radius:50%;background:#aaa;display:inline-block;margin-right:8px}.bad{background:#777}
+.hidden{display:none!important}
+.notice{color:#999;font-size:13px;line-height:1.7}
+@media(max-width:650px){.nav nav{display:none}.product{display:block}.row{display:block}}
+</style>
+</head>
+<body>
+
+<!--
+  KONFIGURASI:
+  Ganti BACKEND_URL dengan URL PUBLIC backend Node.js kamu.
+  Contoh: https://api.yonzstore.com
+  Jangan isi dengan alamat panel Pterodactyl kecuali panel tersebut memang
+  menyediakan endpoint API website yang bisa diakses publik.
+-->
+<script>
+const BACKEND_URL = "http://panelprivatebaan.pteroq.xyz.id:11261";
+const REQUIRED_HEALTH_PATH = "/health";
+</script>
+
+<div id="gate">
+  <div class="gatebox">
+    <div class="tag">YONZ STORE</div>
+    <h2 id="gateTitle">Memeriksa server...</h2>
+    <p id="gateText" class="notice">Website hanya akan dibuka jika backend toko sedang online.</p>
+    <div id="gateStatus"><span class="dot"></span> Checking...</div>
+    <br>
+    <button class="btn" onclick="checkBackend()">COBA LAGI</button>
+  </div>
+</div>
+
+<header class="nav">
+  <div class="logo">YONZ<span>STORE</span></div>
+  <nav><a href="#home">Home</a><a href="#produk">Produk</a><a href="#pesanan">Pesanan</a><a href="#tiktok">TikTok</a><a href="#login">Login</a></nav>
+</header>
+
+<section id="home" class="hero">
+  <div>
+    <div class="eyebrow">WELCOME TO YONZ STORE</div>
+    <h1>Selamat<br>Datang.</h1>
+    <p>Digital store premium dengan tampilan elegan dan proses pemesanan yang sederhana.</p>
+    <a class="btn" href="#produk">Masuk ke Toko ↓</a>
+  </div>
+</section>
+
+<section id="produk" class="section">
+  <div class="head"><span>01</span><h2>Produk Premium</h2></div>
+  <div class="card product">
+    <div><div class="tag">PREMIUM</div><h3>AM Premium</h3>
+      <p>Sewa Bot WhatsApp premium. Pilih produk lalu lanjutkan ke pembayaran.</p>
+      <div class="price">Rp5.000</div>
+    </div>
+    <button class="btn" onclick="buy()">BUY</button>
+  </div>
+</section>
+
+<section id="pesanan" class="section">
+  <div class="head"><span>02</span><h2>Keranjang / Pesanan</h2></div>
+  <div class="card">
+    <p class="notice">Masukkan ID pesanan untuk melihat status dan data claim setelah admin menyelesaikan pesanan.</p>
+    <div class="row"><input id="orderId" placeholder="ID pesanan"><button class="btn" onclick="cekOrder()">LIHAT</button></div>
+    <div id="orderResult"></div>
+  </div>
+</section>
+
+<section id="tiktok" class="section">
+  <div class="head"><span>03</span><h2>TikTok Downloader</h2></div>
+  <div class="card">
+    <input id="tt" placeholder="Tempel link TikTok di sini">
+    <button class="btn" onclick="downloadTikTok()">DOWNLOAD</button>
+    <p id="ttmsg" class="notice"></p>
+  </div>
+</section>
+
+<section id="login" class="section">
+  <div class="head"><span>04</span><h2>Member Area</h2></div>
+  <div class="card">
+    <input placeholder="Username" id="username">
+    <input placeholder="Password" type="password" id="password">
+    <button class="btn" onclick="login()">LOGIN</button>
+    <p class="notice">Akun admin/member dibuat dari backend, bukan dari HTML.</p>
+    <p id="loginmsg"></p>
+  </div>
+</section>
+
+<footer>© 2026 YONZ STORE — Premium Digital Store</footer>
+
+<script>
+function showGate(ok, message){
+  const gate=document.getElementById("gate");
+  document.getElementById("gateTitle").textContent=ok?"Server Online":"Toko Sedang Offline";
+  document.getElementById("gateText").textContent=ok?"Backend terhubung. Selamat berbelanja.":message;
+  document.getElementById("gateStatus").innerHTML=ok?'<span class="dot"></span> Online':'<span class="dot bad"></span> Backend tidak dapat dihubungi';
+  if(ok) setTimeout(()=>gate.classList.add("hidden"),350);
+  else gate.classList.remove("hidden");
+}
+async function checkBackend(){
+  if(BACKEND_URL.includes("GANTI-DENGAN-URL")){
+    showGate(false,"URL backend belum diisi. Setelah backend Pterodactyl kamu punya URL publik, masukkan URL tersebut ke BACKEND_URL di file HTML.");
+    return;
+  }
+  try{
+    const r=await fetch(BACKEND_URL.replace(/\/$/,"")+REQUIRED_HEALTH_PATH,{cache:"no-store"});
+    if(!r.ok) throw new Error();
+    showGate(true,"");
+  }catch(e){
+    showGate(false,"Backend toko sedang offline atau URL/port belum benar.");
+  }
+}
+function buy(){location.href=BACKEND_URL+"/checkout.html";}
+async function cekOrder(){
+  const id=document.getElementById("orderId").value.trim(), box=document.getElementById("orderResult");
+  if(!id){box.innerHTML='<div class="status">Masukkan ID pesanan.</div>';return}
+  try{
+    const r=await fetch(BACKEND_URL+"/api/order/"+encodeURIComponent(id));
+    const d=await r.json(); if(!r.ok) throw new Error(d.error||"Tidak ditemukan");
+    let claim=d.claim?`<hr><b>Data Claim</b><p>Email: ${esc(d.claim.email)}</p><p>Password: ${esc(d.claim.password)}</p><p>Deskripsi: ${esc(d.claim.description)}</p>`:"";
+    box.innerHTML=`<div class="status"><b>${esc(d.product)}</b><br>ID: ${esc(d.id)}<br>Status: <b>${esc(d.status)}</b>${claim}</div>`;
+  }catch(e){box.innerHTML='<div class="status">Pesanan tidak ditemukan atau backend sedang offline.</div>'}
+}
+function downloadTikTok(){
+  const link=document.getElementById("tt").value.trim();
+  if(!link){document.getElementById("ttmsg").textContent="Masukkan link TikTok.";return}
+  document.getElementById("ttmsg").textContent="Downloader API belum dipasang. Nanti tombol ini diarahkan ke endpoint downloader backend.";
+}
+function login(){document.getElementById("loginmsg").textContent="Sistem login akan memakai backend/database."}
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+checkBackend();
+setInterval(checkBackend,15000);
+</script>
+</body>
+</html>
